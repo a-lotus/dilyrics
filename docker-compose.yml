@@ -1,0 +1,58 @@
+version: "3"
+services:
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    ports:
+      - 80:80
+    links:
+      # - lyrics-api
+      - lyrics-web
+
+  lyrics-api:
+    build: ./lyrics/api
+    volumes:
+      - ./api:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+    links:
+      - lyrics-db
+
+  lyrics-db:
+    image: mongo:latest
+    # build: ./lyrics/db
+
+  lyrics-web:
+    build: ./lyrics/web
+    volumes:
+      - ./lyrics/web:/usr/src/app
+      - /usr/src/app/node_modules
+    command: ["npm", "run", "start-dev"]
+    environment:
+      BROWSER: none
+      NODE_ENV: development
+      PORT: 3000
+    # links:
+      # - lyrics-api
+
+  swagger:
+    build: ./swagger
+
+  share:
+    build: ./share
+
+  share-db:
+    build: ./share/db
+
+  users:
+    build: ./users
+
+  users-db:
+    build: ./users/db
+
+  testcafe:
+    build: ./testcafe
