@@ -9,6 +9,7 @@ import CardExample from './CardExample'
 import DatePicker from 'material-ui/DatePicker'
 import AppBar from 'material-ui/AppBar'
 import ActionHome from 'material-ui/svg-icons/action/home'
+import Logo from './Logo'
 
 const paperStyle = {
   margin: 20,
@@ -25,8 +26,10 @@ class App extends Component {
         <div className='App'>
           <AppBar
             title='dilyrics.ru'
+            titleStyle={{ fontFamily: '"Architects Daughter", cursive' }}
             iconElementRight={<IconButton onTouchTap={() => window.alert('hello')}><ActionHome color='white' /></IconButton>}
           />
+          <Logo style={{ fontSize: 24, margin: 24 }} />
           <Paper style={paperStyle} rounded={false}>
             <h2>Добавить публичный текст</h2>
             <DatePicker
