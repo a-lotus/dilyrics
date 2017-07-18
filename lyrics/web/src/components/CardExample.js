@@ -3,7 +3,7 @@ import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
 
 const CardExampleWithAvatar = () => (
-  <Card style={{ margin: 20 }}>
+  <Card>
     <CardTitle title='Card title' subtitle='Card subtitle' />
     <CardText>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
