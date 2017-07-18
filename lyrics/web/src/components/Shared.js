@@ -1,8 +1,9 @@
 import React from 'react'
-import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors'
+import { grey400, darkBlack } from 'material-ui/styles/colors'
+import NavigationExpandMore from 'material-ui/svg-icons/navigation/expand-more'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import Paper from 'material-ui/Paper'
-import {List, ListItem} from 'material-ui/List'
+import { List, ListItem } from 'material-ui/List'
 import Divider from 'material-ui/Divider'
 import Subheader from 'material-ui/Subheader'
 import Avatar from 'material-ui/Avatar'
@@ -94,6 +95,11 @@ const ListExampleMessages = () => (
           </p>
         }
         secondaryTextLines={2}
+      />
+      <Divider inset />
+      <ListItem
+        leftAvatar={<Avatar icon={<NavigationExpandMore />} />}
+        primaryText='Показать еще'
       />
     </List>
   </Paper>

@@ -1,23 +1,13 @@
 import React from 'react'
 import Avatar from 'material-ui/Avatar'
-import List from 'material-ui/List/List'
-import ListItem from 'material-ui/List/ListItem'
 
 import {
   blue300,
   indigo900,
-  orange200,
   deepOrange300,
   pink400,
   purple500
 } from 'material-ui/styles/colors'
-
-console.log('colors:', blue300,
-  indigo900,
-  orange200,
-  deepOrange300,
-  pink400,
-  purple500)
 
 const Plate = () => <div
   style={{

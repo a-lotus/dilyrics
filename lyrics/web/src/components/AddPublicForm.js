@@ -3,35 +3,38 @@ import Paper from 'material-ui/Paper'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
+import { darkBlack } from 'material-ui/styles/colors'
 
-const paperStyle = {
-  paddingTop: 10,
-  paddingLeft: 20,
-  paddingRight: 20,
-  paddingBottom: 20
-}
-
-const AddPublicForm = ({ style }) => <Paper style={{ ...paperStyle, ...style }} rounded={false}>
-  <h2>Добавить публичный текст</h2>
+const AddPublicForm = ({ className, style }) => <Paper className={className} style={{ padding: 16, ...style }} rounded={false}>
+  <h1 style={{
+    color: darkBlack,
+    fontSize: 18,
+    fontWeight: 200,
+    lineHeight: '48px',
+    margin: 0
+  }}>Публикация текста</h1>
   <DatePicker
+    floatingLabelText='Дата'
     autoOk
     container='inline'
     hideCalendarDate
-    hintText='Дата'
     mode='landscape'
   />
   <TextField
-    fullWidth
-    hintText='Описание html страницы'
     floatingLabelText='Описание'
+    fullWidth
+    multiLine
+    rows={1}
+    rowsMax={3}
   />
   <TextField
+    floatingLabelText='Публикуемый текст'
     fullWidth
-    hintText='Вставьте сюда текст песен'
     multiLine
     rows={1}
     rowsMax={14}
   />
+  <p />
   <RaisedButton label='Сохранить' primary />
 </Paper>
 
