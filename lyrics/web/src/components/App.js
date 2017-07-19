@@ -1,29 +1,20 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import './App.css'
+import theme from '../themes/teal'
 
 import AppBar from 'material-ui/AppBar'
-import Divider from 'material-ui/Divider'
-import Drawer from 'material-ui/Drawer'
 import IconButton from 'material-ui/IconButton'
-import MenuItem from 'material-ui/MenuItem'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import ActionSearch from 'material-ui/svg-icons/action/search'
 
 import CardExample from './CardExample'
+import MainMenuDrawer from './MainMenuDrawer'
 import RouterExample from './RouterExample'
-import DrawerPlate from './DrawerPlate'
-import Share from './Share'
+import SharePage from './SharePage'
 import StartPage from './StartPage'
-
-import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom'
-
-import ActionInfo from 'material-ui/svg-icons/action/info'
-import ActionList from 'material-ui/svg-icons/action/list'
-import ActionGrade from 'material-ui/svg-icons/action/grade'
-import ActionSearch from 'material-ui/svg-icons/action/search'
-import ActionSettings from 'material-ui/svg-icons/action/settings'
-import CommunicationRssFeed from 'material-ui/svg-icons/communication/rss-feed'
-import SocialPersonAdd from 'material-ui/svg-icons/social/person-add'
+import PageLogin from './PageUnregistered'
 
 class App extends Component {
   constructor (props) {
@@ -36,46 +27,28 @@ class App extends Component {
   render () {
     return (
       <div className='App'>
-        <Drawer
-          docked={false}
-          width={300}
+        <MainMenuDrawer
+          handleClose={this.handleClose}
+          handleRequestChange={drawerOpen => this.setState({ drawerOpen })}
           open={this.state.drawerOpen}
-          onRequestChange={(drawerOpen) => this.setState({ drawerOpen })}
-          >
-          <DrawerPlate />
-          <nav>
-            <Link to='/router'>
-              <MenuItem onTouchTap={this.handleClose} leftIcon={<ActionList />}>Каталог</MenuItem>
-            </Link>
-            <Link to='/example'>
-              <MenuItem onTouchTap={this.handleClose} leftIcon={<ActionGrade />}>Репертуар</MenuItem>
-            </Link>
-            <Link to='/share'>
-              <MenuItem onTouchTap={this.handleClose} leftIcon={<CommunicationRssFeed />}>Публикация</MenuItem>
-            </Link>
-            <Divider />
-            <Link to='/share'>
-              <MenuItem onTouchTap={this.handleClose} leftIcon={<SocialPersonAdd />}>Пригласить команду</MenuItem>
-            </Link>
-            <Link to='/share'>
-              <MenuItem onTouchTap={this.handleClose} leftIcon={<ActionSettings />}>Настройки</MenuItem>
-            </Link>
-            <Link to='/share'>
-              <MenuItem onTouchTap={this.handleClose} leftIcon={<ActionInfo />}>Справочная информация</MenuItem>
-            </Link>
-          </nav>
-        </Drawer>
-        <AppBar
-          title='dilyrics.ru'
-          titleStyle={{ fontFamily: '"Architects Daughter", cursive' }}
-          iconElementRight={<IconButton><ActionSearch color='white' /></IconButton>}
-          onRightIconButtonTouchTap={() => window.alert('hello')}
-          onLeftIconButtonTouchTap={this.handleToggle}
         />
+        <Route path='/login' children={({ match }) => (
+          <AppBar
+            title='dilyrics.ru'
+            titleStyle={{ fontFamily: '"Architects Daughter", cursive' }}
+            iconElementRight={match ? null : <IconButton><ActionSearch color='white' /></IconButton>}
+            onRightIconButtonTouchTap={() => window.alert('hello')}
+            onLeftIconButtonTouchTap={this.handleToggle}
+            showMenuIconButton={!match}
+          />
+        )} />
         <Switch>
-          <Route path='/share' component={Share} />
-          <Route path='/example' component={CardExample} />
-          <Route path='/router' component={RouterExample} />
+          <Route path='/catalog' component={SharePage} />
+          <Route path='/favorites' component={CardExample} />
+          <Route path='/share' component={SharePage} />
+          <Route path='/settings' component={CardExample} />
+          <Route path='/info' component={RouterExample} />
+          <Route path='/login' component={PageLogin} />
           <Route path='/' component={StartPage} />
         </Switch>
       </div>
@@ -87,8 +60,10 @@ App.contextTypes = {
   router: PropTypes.object
 }
 
-export default () => <Router>
-  <MuiThemeProvider>
-    <App />
-  </MuiThemeProvider>
-</Router>
+export default () => (
+  <Router>
+    <MuiThemeProvider muiTheme={theme}>
+      <App />
+    </MuiThemeProvider>
+  </Router>
+)

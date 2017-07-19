@@ -10,6 +10,7 @@ import Avatar from 'material-ui/Avatar'
 import IconButton from 'material-ui/IconButton'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
+import muiThemeable from 'material-ui/styles/muiThemeable'
 
 const iconButtonElement = (
   <IconButton
@@ -28,7 +29,7 @@ const rightIconMenu = (
   </IconMenu>
 )
 
-const ListExampleMessages = () => (
+const Shared = ({ muiTheme }) => (
   <Paper>
     <List>
       <Subheader>Последние добавленные публикации</Subheader>
@@ -98,11 +99,11 @@ const ListExampleMessages = () => (
       />
       <Divider inset />
       <ListItem
-        leftAvatar={<Avatar icon={<NavigationExpandMore />} />}
+        leftAvatar={<Avatar icon={<NavigationExpandMore />} backgroundColor={muiTheme.palette.accent1Color} />}
         primaryText='Показать еще'
       />
     </List>
   </Paper>
 )
 
-export default ListExampleMessages
+export default muiThemeable()(Shared)

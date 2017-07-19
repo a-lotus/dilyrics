@@ -1,7 +1,8 @@
 import React from 'react'
+import { deepOrangeA200 } from 'material-ui/styles/colors'
 
 const Icon = () => <span style={{
-  backgroundColor: '#e67e22',
+  backgroundColor: deepOrangeA200,
   borderTopLeftRadius: '50%',
   borderTopRightRadius: '50%',
   borderBottomLeftRadius: '50%',
