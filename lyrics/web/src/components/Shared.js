@@ -34,7 +34,7 @@ const Shared = ({ muiTheme }) => (
     <List>
       <Subheader>Последние добавленные публикации</Subheader>
       <ListItem
-        leftAvatar={<Avatar src='http://lorempixel.com/128/128/sports' />}
+        leftAvatar={<Avatar src='https://lorempixel.com/128/128/sports' />}
         rightIconButton={rightIconMenu}
         primaryText='Brendan Lim'
         secondaryText={
@@ -47,7 +47,7 @@ const Shared = ({ muiTheme }) => (
       />
       <Divider inset />
       <ListItem
-        leftAvatar={<Avatar src='http://lorempixel.com/128/128' />}
+        leftAvatar={<Avatar src='https://lorempixel.com/128/128' />}
         rightIconButton={rightIconMenu}
         primaryText='me, Scott, Jennifer'
         secondaryText={
@@ -60,7 +60,7 @@ const Shared = ({ muiTheme }) => (
       />
       <Divider inset />
       <ListItem
-        leftAvatar={<Avatar src='http://lorempixel.com/128/128/city' />}
+        leftAvatar={<Avatar src='https://lorempixel.com/128/128/city' />}
         rightIconButton={rightIconMenu}
         primaryText='Grace Ng'
         secondaryText={
@@ -73,7 +73,7 @@ const Shared = ({ muiTheme }) => (
       />
       <Divider inset />
       <ListItem
-        leftAvatar={<Avatar src='http://lorempixel.com/128/128/fashion' />}
+        leftAvatar={<Avatar src='https://lorempixel.com/128/128/fashion' />}
         rightIconButton={rightIconMenu}
         primaryText='Kerem Suer'
         secondaryText={
@@ -86,7 +86,7 @@ const Shared = ({ muiTheme }) => (
       />
       <Divider inset />
       <ListItem
-        leftAvatar={<Avatar src='http://lorempixel.com/128/128/nature' />}
+        leftAvatar={<Avatar src='https://lorempixel.com/128/128/nature' />}
         rightIconButton={rightIconMenu}
         primaryText='Raquel Parrado'
         secondaryText={

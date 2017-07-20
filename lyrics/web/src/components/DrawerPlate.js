@@ -25,7 +25,7 @@ const Plate = ({ muiTheme }) => {
     }}>
       <Avatar
         size={3 * iconSize}
-        src='http://lorempixel.com/128/128'
+        src='https://lorempixel.com/128/128'
         style={{
           marginRight: desktopGutterLess,
           verticalAlign: 'middle'
