@@ -5,11 +5,12 @@ services:
     image: nginx:latest
     volumes:
       - ./nginx:/etc/nginx/conf.d
+      - js-assets:/var/www
     ports:
       - 80:80
-    links:
+    # links:
       # - lyrics-api
-      - lyrics-web
+      # - lyrics-web
 
   lyrics-api:
     build: ./lyrics/api
@@ -31,7 +32,8 @@ services:
     volumes:
       - ./lyrics/web:/usr/src/app
       - /usr/src/app/node_modules
-    command: ["npm", "run", "start-dev"]
+      - js-assets:/usr/src/app/build
+    command: ["npm", "run", "build"]
     environment:
       BROWSER: none
       NODE_ENV: development
@@ -56,3 +58,7 @@ services:
 
   testcafe:
     build: ./testcafe
+  
+volumes:
+  js-assets:
+    driver: local
