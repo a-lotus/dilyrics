@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import DrawerPlate from './DrawerPlate'
 
 import Divider from 'material-ui/Divider'
@@ -13,34 +13,31 @@ import ActionSettings from 'material-ui/svg-icons/action/settings'
 import CommunicationRssFeed from 'material-ui/svg-icons/communication/rss-feed'
 import SocialPersonAdd from 'material-ui/svg-icons/social/person-add'
 
-const MainMenuDrawer = ({ handleClose, handleRequestChange, open }) => (<Drawer
-  docked={false}
-  width={300}
-  open={open}
-  onRequestChange={handleRequestChange}
-  >
-  <DrawerPlate />
-  <nav>
-    <Link to='/catalog'>
-      <MenuItem onTouchTap={handleClose} leftIcon={<ActionList />}>Каталог</MenuItem>
-    </Link>
-    <Link to='/favorites'>
-      <MenuItem onTouchTap={handleClose} leftIcon={<ActionGrade />}>Репертуар</MenuItem>
-    </Link>
-    <Link to='/share'>
-      <MenuItem onTouchTap={handleClose} leftIcon={<CommunicationRssFeed />}>Публикация</MenuItem>
-    </Link>
+const MainMenuDrawer = ({ handleClose, handleRequestChange, open }, { router }) => {
+  const menuTapHandler = path => () => {
+    handleClose()
+    router.history.push(path)
+  }
+
+  return (<Drawer
+    docked={false}
+    width={300}
+    open={open}
+    onRequestChange={handleRequestChange}
+    >
+    <DrawerPlate />
+    <MenuItem onTouchTap={menuTapHandler('/catalog')} leftIcon={<ActionList />} primaryText='Каталог' />
+    <MenuItem onTouchTap={menuTapHandler('/favorites')} leftIcon={<ActionGrade />} primaryText='Репертуар' />
+    <MenuItem onTouchTap={menuTapHandler('/share')} leftIcon={<CommunicationRssFeed />} primaryText='Публикация' />
     <Divider />
-    <Link to='/'>
-      <MenuItem onTouchTap={handleClose} leftIcon={<SocialPersonAdd />}>Пригласить команду</MenuItem>
-    </Link>
-    <Link to='/settings'>
-      <MenuItem onTouchTap={handleClose} leftIcon={<ActionSettings />}>Настройки</MenuItem>
-    </Link>
-    <Link to='/info'>
-      <MenuItem onTouchTap={handleClose} leftIcon={<ActionInfo />}>Справочная информация</MenuItem>
-    </Link>
-  </nav>
-</Drawer>)
+    <MenuItem onTouchTap={menuTapHandler('/')} leftIcon={<SocialPersonAdd />} primaryText='Пригласить команду' />
+    <MenuItem onTouchTap={menuTapHandler('/settings')} leftIcon={<ActionSettings />} primaryText='Настройки' />
+    <MenuItem onTouchTap={menuTapHandler('/info')} leftIcon={<ActionInfo />} primaryText='Справочная информация' />
+  </Drawer>)
+}
+
+MainMenuDrawer.contextTypes = {
+  router: PropTypes.object
+}
 
 export default MainMenuDrawer

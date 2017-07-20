@@ -7,6 +7,7 @@ import theme from '../themes/teal'
 import AppBar from 'material-ui/AppBar'
 import IconButton from 'material-ui/IconButton'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import muiThemeable from 'material-ui/styles/muiThemeable'
 import ActionSearch from 'material-ui/svg-icons/action/search'
 
 import CardExample from './CardExample'
@@ -40,17 +41,28 @@ class App extends Component {
             onRightIconButtonTouchTap={() => window.alert('hello')}
             onLeftIconButtonTouchTap={this.handleToggle}
             showMenuIconButton={!match}
+            style={{
+              position: 'fixed'
+            }}
           />
         )} />
-        <Switch>
-          <Route path='/catalog' component={SharePage} />
-          <Route path='/favorites' component={CardExample} />
-          <Route path='/share' component={SharePage} />
-          <Route path='/settings' component={CardExample} />
-          <Route path='/info' component={RouterExample} />
-          <Route path='/login' component={PageLogin} />
-          <Route path='/' component={StartPage} />
-        </Switch>
+        <div className='apwr'
+          style={{ paddingTop: this.props.muiTheme.appBar.height }}
+        >
+          <div className='apwr'
+            style={{ overflow: 'auto' }}
+          >
+            <Switch>
+              <Route path='/catalog' component={SharePage} />
+              <Route path='/favorites' component={CardExample} />
+              <Route path='/share' component={SharePage} />
+              <Route path='/settings' component={CardExample} />
+              <Route path='/info' component={RouterExample} />
+              <Route path='/login' component={PageLogin} />
+              <Route path='/' component={StartPage} />
+            </Switch>
+          </div>
+        </div>
       </div>
     )
   }
@@ -60,10 +72,12 @@ App.contextTypes = {
   router: PropTypes.object
 }
 
+const AppThemeable = muiThemeable()(App)
+
 export default () => (
   <Router>
     <MuiThemeProvider muiTheme={theme}>
-      <App />
+      <AppThemeable />
     </MuiThemeProvider>
   </Router>
 )
