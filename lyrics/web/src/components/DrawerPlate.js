@@ -4,58 +4,6 @@ import muiThemeable from 'material-ui/styles/muiThemeable'
 import IconButton from 'material-ui/IconButton'
 import NavigationArrowDropDown from 'material-ui/svg-icons/navigation/arrow-drop-down'
 
-// import {
-//   indigo900,
-//   deepOrange300,
-//   pink400,
-//   purple500,
-//   lightBlack
-// } from 'material-ui/styles/colors'
-
-// const substrate = [
-//   {
-//     color: indigo900,
-//     degree: 0,
-//     height: 200,
-//     width: 180,
-//     left: 130,
-//     top: -10
-//   },
-//   {
-//     color: pink400,
-//     degree: -24,
-//     height: 300,
-//     width: 180,
-//     left: -70,
-//     top: 0
-//   },
-//   {
-//     color: deepOrange300,
-//     degree: 20,
-//     height: 200,
-//     width: 180,
-//     left: 170,
-//     top: 10
-//   },
-//   {
-//     color: purple500,
-//     degree: -45,
-//     height: 300,
-//     width: 180,
-//     left: 180,
-//     top: -110
-//   }
-// ].map((d, i) => <div key={i} style={{
-//   backgroundColor: d.color,
-//   height: d.height,
-//   width: d.width,
-//   position: 'absolute',
-//   left: d.left,
-//   top: d.top,
-//   transform: `rotate(${d.degree}deg)`,
-//   boxShadow: `0 0 18px ${lightBlack}`
-// }} />)
-
 const Plate = ({ muiTheme }) => {
   console.log(muiTheme.spacing)
   console.log(muiTheme.palette)
@@ -71,7 +19,6 @@ const Plate = ({ muiTheme }) => {
       position: 'relative'
     }}
   >
-    {/* {substrate} */}
     <div style={{
       position: 'relative',
       padding: desktopGutterLess
