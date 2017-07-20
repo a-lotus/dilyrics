@@ -4,10 +4,13 @@ services:
   nginx:
     image: nginx:latest
     volumes:
-      - ./nginx:/etc/nginx/conf.d
-      - js-assets:/var/www
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - $HOME/ssl:/etc/nginx/ssl
+      - js-assets:/var/local/www
     ports:
       - 80:80
+      - 443:443
     # links:
       # - lyrics-api
       # - lyrics-web
