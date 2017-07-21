@@ -53,7 +53,7 @@ const Share = ({
       />
       <RaisedButton
         label='Сохранить'
-        onTouchTap={submit}
+        onTouchTap={() => submit({ date, description, text })}
         primary
         style={{ marginTop: desktopGutterLess }}
       />

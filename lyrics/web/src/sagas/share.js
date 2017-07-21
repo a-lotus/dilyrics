@@ -1,15 +1,12 @@
-import { all, call, put, takeLatest } from 'redux-saga/effects'
+import { call, put, takeLatest } from 'redux-saga/effects'
 
 const scc = type => type.replace('REQUEST', 'SUCCESS')
 const flr = type => type.replace('REQUEST', 'FAILURE')
 
-export function * shareSubmit ({ api, logger }, { type }) {
+export function * shareSubmit ({ logger, shareApi }, { doc, type }) {
   try {
-    const [ config, subjects ] = yield all([
-      call([api, 'getMyConfig']),
-      call([api, 'getSubjects'])
-    ])
-    yield put({ type: scc(type) })
+    const document = yield call([shareApi, 'addPlain'], doc)
+    yield put({ type: scc(type), document })
   } catch (err) {
     logger && typeof logger.error === 'function' && logger.error('shareSubmit error', err)
     yield put({ type: flr(type), err: err.message })

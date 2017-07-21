@@ -11,7 +11,8 @@ services:
     ports:
       - 80:80
       - 443:443
-    # links:
+    links:
+      - share
       # - lyrics-api
       # - lyrics-web
 
@@ -41,6 +42,7 @@ services:
       BROWSER: none
       NODE_ENV: development
       PORT: 3000
+      REACT_APP_SHARE_API: https://share.d.ru
     # links:
       # - lyrics-api
 
@@ -49,9 +51,19 @@ services:
 
   share:
     build: ./share
+    volumes:
+      - ./share:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      REACT_APP_DILYRICS_URL: https://d.ru
+    links:
+      - share-db
 
   share-db:
-    build: ./share/db
+    image: mongo:latest
+    # build: ./share/db
 
   users:
     build: ./users
