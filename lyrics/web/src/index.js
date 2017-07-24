@@ -19,7 +19,8 @@ import ShareApi from './shareApi'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
 
-const shareApi = new ShareApi(process.env.REACT_APP_SHARE_API, window.fetch)
+const shareUrl = process.env.REACT_APP_SHARE_API
+const shareApi = new ShareApi(shareUrl, window.fetch)
 
 const loggerOptions = {
   useColors: true,
@@ -44,9 +45,10 @@ sagaMiddleware.run(sagas, extraArguments)
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <App shareUrl={shareUrl} />
   </Provider>,
   document.getElementById('root')
 )
 registerServiceWorker()
 store.dispatch({ type: 'GET_CONFIG_REQUEST' })
+store.dispatch({ type: 'SHARE_LOAD_LAST_REQUEST' })

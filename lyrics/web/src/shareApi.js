@@ -1,32 +1,33 @@
 class ShareApi {
   constructor (url, fetchFunc) {
-    // const postHeaders = {
-    //   'Accept': 'application/json',
-    //   'Content-Type': 'application/json;charset=UTF-8',
-    //   'content-Type': 'application/json;charset=UTF-8'
-    // }
-    const postHeaders = new window.Headers()
-    postHeaders.set('Content-Type', 'application/json')
-    const init = body => {
+    const postHeaders = new window.Headers({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json;charset=UTF-8'
+    })
+    const postOptions = body => {
       const init = {
         body: JSON.stringify(body),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json;charset=UTF-8',
-          'content-Type': 'application/json;charset=UTF-8'
-        },
+        headers: postHeaders,
         method: 'POST',
-        mode: 'no-cors'
+        mode: 'cors'
       }
-      console.log('init', init)
       return init
     }
+
     this.get = (path) => fetchFunc(url + path, { method: 'GET' })
-    this.post = (path, body) => fetchFunc(url + path, init(body))
+    this.post = (path, body) => fetchFunc(url + path, postOptions(body))
   }
 
-  getPlain (token) {
-    return this.get(`/pt/${token}`)
+  getCount () {
+    return this.get('/pt/count')
+  }
+
+  getPlain (id) {
+    return this.get(`/pt/json/${id}`)
+  }
+
+  getPlainList (isoDate) {
+    return this.get(`/pt/json/last/${this.queryLimit || 5}/${isoDate}`)
   }
 
   addPlain (doc) {

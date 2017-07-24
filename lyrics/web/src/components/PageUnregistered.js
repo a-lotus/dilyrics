@@ -19,16 +19,17 @@ class PageUnregistered extends Component {
       // <Media query='(min-height: 600px)'>
       //   {matches => (
       <div className='apwr' style={{
+        alignItems: 'center',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
-        textAlign: 'center',
         overflow: 'auto'
       }}>
         <div style={{
           display: 'flex',
           flexDirection: 'column',
-          minHeight: 'min-content'
+          flexShrink: 0,
+          minHeight: 'min-content',
+          textAlign: 'center'
         }}>
           <Logo withIcon style={{ fontSize: muiTheme.spacing.iconSize }} />
           {this.state.signup ? <SignUp /> : <Login />}

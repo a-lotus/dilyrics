@@ -3,30 +3,69 @@ const ObjectID = require('mongodb').ObjectID
 const assert = require('assert')
 const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 const btoa = require('btoa')
 
 const app = express()
 const url = 'mongodb://share-db:27017/share'
 let db
 
-const siteUrl = process.env.REACT_APP_DILYRICS_URL
+// const origin = process.env.REACT_APP_DILYRICS_URL
+// const optionsSuccessStatus = 200
+// app.use(cors({ origin, optionsSuccessStatus }))
+app.use(cors())
+app.use(bodyParser.json())
 
 MongoClient.connect(url, function (err, dbConnected) {
   assert.equal(null, err)
   db = dbConnected
 })
 
-app.use(bodyParser.json())
+const renderPage = doc => `<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Песни хвалы ${doc.date}. Яблоновский.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="${doc.description}">
+    <meta property="og:title" content="Песни хвалы ${doc.date}. Яблоновский">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:description" content="${doc.description}">
+  </head>
+  <body><p></p><pre>${doc.text}</pre><p></p></body>
+</html>`
 
-// http page
+// getCount
+app.get('/pt/count', async function (req, res, next) {
+  try {
+    const count = await db.collection('plaintext').count()
+    res.json(count)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// getPlain html
 app.get('/pt/:token', async function (req, res, next) {
   const token = req.params.token
-  console.log('token', token)
   try {
     const doc = await db.collection('plaintext').findOne({ token })
-    console.log('doc', doc)
     if (!doc) {
       return next({ status: 404, message: 'Token not found', token })
+    }
+    res.type('html').send(renderPage(doc))
+  } catch (err) {
+    next(err)
+  }
+})
+
+// getPlain json
+app.get('/pt/json/:id', async function (req, res, next) {
+  const id = req.params.id
+  try {
+    const doc = await db.collection('plaintext').findOne({ _id: new ObjectID(id) })
+    if (!doc) {
+      return next({ status: 404, message: 'Document with such id not found', id })
     }
     res.json(doc)
   } catch (err) {
@@ -34,12 +73,25 @@ app.get('/pt/:token', async function (req, res, next) {
   }
 })
 
-// addClan
+// getPlain list
+app.get('/pt/json/last/:count/:earlierThan', async function (req, res, next) {
+  const count = req.params.count | 0
+  const earlierThan = new Date(req.params.earlierThan)
+  try {
+    const docs = await db.collection('plaintext')
+      .find({ created: { $lt: earlierThan } })
+      .sort({ created: -1 })
+      .limit(count)
+      .toArray()
+    res.json(docs)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// addPlain
 app.post('/pt', async function (req, res, next) {
   const doc = req.body
-  console.log('POST /pt method: ', req.method)
-  console.log('POST /pt doc: ', doc)
-  console.log('POST /pt Content-Type: ', req.headers['content-type'])
   doc.token = btoa(Date.now() / 1000 | 0).replace(/=+$/, '')
   doc.created = new Date()
   try {
@@ -48,7 +100,6 @@ app.post('/pt', async function (req, res, next) {
       return next(new Error('Couldn\'t add document'))
     }
     res.json(result.ops[0])
-    console.log('result: ', result.ops[0])
   } catch (err) {
     next(err)
   }

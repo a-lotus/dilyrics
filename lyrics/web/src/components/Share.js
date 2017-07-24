@@ -8,7 +8,7 @@ import container from '../containers/share'
 
 const Share = ({
   className, muiTheme, style,
-  date, description, text,
+  date, description, text, isSubmitting,
   setDate, setDescription, setText, submit
   }) => {
   const { desktopGutterLess, desktopSubheaderHeight } = muiTheme.spacing
@@ -52,6 +52,7 @@ const Share = ({
         value={text}
       />
       <RaisedButton
+        disabled={isSubmitting}
         label='Сохранить'
         onTouchTap={() => submit({ date, description, text })}
         primary

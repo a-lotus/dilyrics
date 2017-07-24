@@ -42,7 +42,7 @@ services:
       BROWSER: none
       NODE_ENV: development
       PORT: 3000
-      REACT_APP_SHARE_API: https://share.d.ru
+      REACT_APP_SHARE_API: https://share.dilyrics.ru
     # links:
       # - lyrics-api
 
@@ -57,7 +57,7 @@ services:
     environment:
       NODE_ENV: development
       PORT: 3000
-      REACT_APP_DILYRICS_URL: https://d.ru
+      REACT_APP_DILYRICS_URL: https://dilyrics.ru
     links:
       - share-db
 
