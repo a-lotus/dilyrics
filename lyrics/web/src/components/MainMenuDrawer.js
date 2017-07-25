@@ -1,6 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import DrawerPlate from './DrawerPlate'
+import { withRouter } from 'react-router-dom'
 
 import Divider from 'material-ui/Divider'
 import Drawer from 'material-ui/Drawer'
@@ -15,14 +15,14 @@ import SocialPersonAdd from 'material-ui/svg-icons/social/person-add'
 
 const SelectableList = makeSelectable(List)
 
-const MainMenuDrawer = ({ handleClose, handleRequestChange, open }, { router }) => (<Drawer
+const MainMenuDrawer = ({ handleClose, handleRequestChange, history, location, open }) => (<Drawer
   docked={false}
   width={300}
   open={open}
   onRequestChange={handleRequestChange}
   >
   <DrawerPlate />
-  <SelectableList value={router.route.location.pathname} onChange={(event, index) => { handleClose(); router.history.push(index) }}>
+  <SelectableList value={location.pathname} onChange={(event, index) => { handleClose(); history.push(index) }}>
     <ListItem leftIcon={<ActionList />} primaryText='Каталог' value='/catalog' />
     <ListItem leftIcon={<ActionGrade />} primaryText='Репертуар' value='/favorites' />
     <ListItem leftIcon={<CommunicationRssFeed />} primaryText='Публикация' value='/share' />
@@ -33,8 +33,4 @@ const MainMenuDrawer = ({ handleClose, handleRequestChange, open }, { router }) 
   </SelectableList>
 </Drawer>)
 
-MainMenuDrawer.contextTypes = {
-  router: PropTypes.object
-}
-
-export default MainMenuDrawer
+export default withRouter(MainMenuDrawer)
