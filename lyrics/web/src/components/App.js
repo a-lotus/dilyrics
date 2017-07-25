@@ -72,14 +72,14 @@ class App extends Component {
             style={{ overflow: 'auto' }}
           >
             <Switch>
-              <Route path='/catalog' component={SharePage} />
-              <Route path='/favorites' component={CardExample} />
-              <Route path='/share' component={SharePage} />
-              <Route path='/settings' component={CardExample} />
-              <Route path='/info' component={RouterExample} />
-              <Route path='/login' component={PageLogin} />
+              <Route path='/catalog' render={SharePage} />
+              <Route path='/favorites' render={CardExample} />
+              <Route path='/share' render={SharePage} />
+              <Route path='/settings' render={CardExample} />
+              <Route path='/info' render={RouterExample} />
+              <Route path='/login' render={PageLogin} />
               <Route path='/preview/:id' component={SharedPreview} />
-              <Route path='/' component={StartPage} />
+              <Route path='/' render={StartPage} />
             </Switch>
           </div>
         </div>

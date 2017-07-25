@@ -4,7 +4,7 @@ import DrawerPlate from './DrawerPlate'
 
 import Divider from 'material-ui/Divider'
 import Drawer from 'material-ui/Drawer'
-import MenuItem from 'material-ui/MenuItem'
+import { List, ListItem, makeSelectable } from 'material-ui/List'
 
 import ActionInfo from 'material-ui/svg-icons/action/info'
 import ActionList from 'material-ui/svg-icons/action/list'
@@ -13,28 +13,25 @@ import ActionSettings from 'material-ui/svg-icons/action/settings'
 import CommunicationRssFeed from 'material-ui/svg-icons/communication/rss-feed'
 import SocialPersonAdd from 'material-ui/svg-icons/social/person-add'
 
-const MainMenuDrawer = ({ handleClose, handleRequestChange, open }, { router }) => {
-  const menuTapHandler = path => () => {
-    handleClose()
-    router.history.push(path)
-  }
+const SelectableList = makeSelectable(List)
 
-  return (<Drawer
-    docked={false}
-    width={300}
-    open={open}
-    onRequestChange={handleRequestChange}
-    >
-    <DrawerPlate />
-    <MenuItem onTouchTap={menuTapHandler('/catalog')} leftIcon={<ActionList />} primaryText='Каталог' />
-    <MenuItem onTouchTap={menuTapHandler('/favorites')} leftIcon={<ActionGrade />} primaryText='Репертуар' />
-    <MenuItem onTouchTap={menuTapHandler('/share')} leftIcon={<CommunicationRssFeed />} primaryText='Публикация' />
+const MainMenuDrawer = ({ handleClose, handleRequestChange, open }, { router }) => (<Drawer
+  docked={false}
+  width={300}
+  open={open}
+  onRequestChange={handleRequestChange}
+  >
+  <DrawerPlate />
+  <SelectableList value={router.route.location.pathname} onChange={(event, index) => { handleClose(); router.history.push(index) }}>
+    <ListItem leftIcon={<ActionList />} primaryText='Каталог' value='/catalog' />
+    <ListItem leftIcon={<ActionGrade />} primaryText='Репертуар' value='/favorites' />
+    <ListItem leftIcon={<CommunicationRssFeed />} primaryText='Публикация' value='/share' />
     <Divider />
-    <MenuItem onTouchTap={menuTapHandler('/')} leftIcon={<SocialPersonAdd />} primaryText='Пригласить команду' />
-    <MenuItem onTouchTap={menuTapHandler('/settings')} leftIcon={<ActionSettings />} primaryText='Настройки' />
-    <MenuItem onTouchTap={menuTapHandler('/info')} leftIcon={<ActionInfo />} primaryText='Справочная информация' />
-  </Drawer>)
-}
+    <ListItem leftIcon={<SocialPersonAdd />} primaryText='Пригласить команду' value='/' />
+    <ListItem leftIcon={<ActionSettings />} primaryText='Настройки' value='/settings' />
+    <ListItem leftIcon={<ActionInfo />} primaryText='Информация' value='/info' />
+  </SelectableList>
+</Drawer>)
 
 MainMenuDrawer.contextTypes = {
   router: PropTypes.object
